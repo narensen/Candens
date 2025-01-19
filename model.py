@@ -8,4 +8,9 @@ class Candens(nn.Module):
         self.backbone = torchvision.models.densenet161(pretrained=True)
         in_features = self.backbone.fc.in_features
 
-        self.logit == nn.Linear(in_features)
+        self.logit == nn.Linear(in_features, 1)
+        
+    def forward(self, x):
+        return self.backbone(x)
+        
+
