@@ -5,7 +5,7 @@ import torch.nn as nn
 from sklearn.metrics import r2_score
 
 
-def fit(dataloader, device, epochs=15):
+def fit(dataloader, test_dataloader, device, epochs=15):
 
     model = Candens().to(device)
     optimizer = torch.optim.Adam(model.parameters())
@@ -34,6 +34,31 @@ def fit(dataloader, device, epochs=15):
 
         epoch_time = time.time() - train_time
         print(f"Training Loss: {train_loss/len(dataloader):.4f} Time:{epoch_time:.2f}s")
+
+        model.eval()
+
+        y_true = []
+        y_pred = []
+
+        with torch.no_grad():
+            for _, d in enumerate(test_dataloader):
+
+                inputs = d["images"].to(device)
+                labels = d["labels"].to(device)
+
+                output = model(inputs)
+
+                y_true.extend(labels.cpu().numpy())
+                y_pred.extend(output.cpu().numpy())
+
+            r2 = r2_score(y_true, y_pred)
+            print(r2)
+
+            if r2 > best_accuracy:
+                best_accuracy = r2
+                if r2 >= 85:
+                    torch.save(model.state_dict(), "best_model.pth")
+
     
     return model
 
