@@ -44,7 +44,6 @@ class BeautyDataset(Dataset):
         image = cv2.imread(image_scv, cv2.IMREAD_COLOR)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         labels = self.df.loc[idx, "rate"]
-        labels = labels.squeeze()
 
         if self.transforms:
             transformed = self.transforms(image=image)
