@@ -1,4 +1,3 @@
-from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from typing import List
@@ -13,9 +12,9 @@ import numpy as np
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
-from data import BeautyDataset
-from data import dataset
-from train import fit
+from src.data import BeautyDataset
+from src.data import dataset
+from src.train import fit
 
 SIZE = 224
 device = "cuda" if torch.cuda.is_available() else "cpu"
