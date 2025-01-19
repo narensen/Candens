@@ -50,8 +50,9 @@ class BeautyDataset(Dataset):
         if self.transforms:
             transformed = self.transforms(image=image)
             image = transformed['image']
+
+        label  = torch.tensor(label, dtype=torch.float32)
             
-        
         return {'images':image,'labels':labels}
 
 
