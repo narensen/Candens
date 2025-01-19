@@ -2,6 +2,7 @@ import time
 from model import Candens
 import torch
 import torch.nn as nn
+from sklearn.metrics import r2_score
 
 
 def fit(dataloader, device, epochs=15):
