@@ -52,7 +52,7 @@ class BeautyDataset(Dataset):
 
         label  = torch.tensor(labels, dtype=torch.float32)
             
-        return {'images':image,'labels':labels}
+        return {'images':image,'labels':label}
 
 
 

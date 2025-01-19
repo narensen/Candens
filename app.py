@@ -30,8 +30,8 @@ transforms = A.Compose([
 train_df = BeautyDataset(train_df, transforms)
 test_df = BeautyDataset(test_df, transforms)
 
-train_dataset = DataLoader(train_df)
-test_dataset = DataLoader(test_df)
+train_dataset = DataLoader(train_df, batch_size=32, shuffle=True, num_workers=4)
+test_dataset = DataLoader(test_df, batch_size=32, shuffle=False, num_workers=4)
 
 model = fit(train_dataset, test_dataset, device)
 
