@@ -11,11 +11,9 @@ import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_auc_score
 from sklearn.metrics import mean_squared_error
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import OneHotEncoder
-
 
 
 def dataset(device):
