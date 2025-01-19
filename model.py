@@ -9,11 +9,11 @@ class Candens(nn.Module):
         self.backbone = torchvision.models.densenet161(pretrained=True)
         in_features = self.backbone.classifier.in_features
 
-        self.logit == nn.Linear(in_features, 1)
+        self.logit = nn.Linear(in_features, 1)
         
     def forward(self, x):
         x = self.backbone.features(x)
-        x = torch.flatten(x)
+        x = torch.flatten(x, 1)
 
         x = self.logit(x)
         return x
