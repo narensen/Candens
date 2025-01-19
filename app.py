@@ -1,19 +1,27 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from typing import list
 from pydantic import BaseModel
+
 from torch.utils.data import DataLoader
 import torch
+
 import cv2
 import numpy as np
+
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 from data import BeautyDataset
 from data import dataset
 
+
+from sklearn.metrics import mean_squared_error
+
 SIZE = 224
 device = "cuda" if torch.cuda.is_available() else "cpu"
+
 
 
 train_df, test_df = dataset(device)
@@ -24,6 +32,11 @@ test_df = BeautyDataset(test_df, transforms)
 
 train_dataset = DataLoader(train_df, transforms)
 test_dataset = DataLoader(test_df, transforms)
+
+criterion = mean_squared_error()
+optimizer = torch.optim.Adam()
+
+
 
 
     
