@@ -23,7 +23,7 @@ def dataset(device):
     df.columns=["filename", "rate"]
     df['image_path']=df['filename'].apply(lambda x:os.path.join(dir_images,x))
 
-    train_df, test_df = train_test_split(df, test_size=0.2, random_state=42, stratify=df["rate"])
+    train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 
     train_df = train_df.reset_index(drop=True)
     test_df = test_df.reset_index(drop=True)
