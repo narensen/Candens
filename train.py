@@ -17,7 +17,7 @@ def fit(dataloader, device, epochs=15):
         print(f"{epoch+1}/{epochs} Epochs")
 
         model.train()
-        for batch_idx, d in enumerate(dataloader):
+        for _, d in enumerate(dataloader):
 
             inputs = d["images"].to(device)
             labels = d["labels"].to(device)
