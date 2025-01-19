@@ -49,7 +49,7 @@ class BeautyDataset(Dataset):
             transformed = self.transforms(image=image)
             image = transformed['image']
 
-        label  = torch.tensor(labels, dtype=torch.float32)
+        label  = torch.tensor(labels, dtype=torch.float32).view(1)
             
         return {'images':image,'labels':label}
 

@@ -3,6 +3,7 @@ from model import Candens
 import torch
 import torch.nn as nn
 from sklearn.metrics import r2_score
+from tqdm import tqdm
 
 
 def fit(dataloader, test_dataloader, device="cpu", epochs=15):
@@ -18,21 +19,24 @@ def fit(dataloader, test_dataloader, device="cpu", epochs=15):
         print(f"{epoch+1}/{epochs} Epochs")
 
         model.train()
-        for _, d in enumerate(dataloader):
+        with tqdm(dataloader, unit="batch") as tepoch:
+            for _, d in enumerate(dataloader):
 
-            inputs = d["images"].to(device)
-            labels = d["labels"].to(device)
-            
-            optimizer.zero_grad()
-            output = model(inputs)
-            loss = criterion(output, labels)
+                inputs = d["images"].to(device)
+                labels = d["labels"].to(device)
+                
+                optimizer.zero_grad()
+                output = model(inputs)
+                loss = criterion(output, labels)
 
-            loss.backward()
-            optimizer.step()
+                loss.backward()
+                optimizer.step()
 
-            train_loss += loss.item()
+                train_loss += loss.item()
+                tepoch.set_postfix(loss=train_loss / (_ + 1))
 
         epoch_time = time.time() - train_time
+
         print(f"Training Loss: {train_loss/len(dataloader):.4f} Time:{epoch_time:.2f}s")
 
         model.eval()
