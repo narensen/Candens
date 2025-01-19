@@ -7,15 +7,18 @@ class Candens(nn.Module):
         super().__init__()
 
         self.backbone = torchvision.models.densenet161(pretrained=True)
-        in_features = self.backbone.classifier.in_features
+        self.backbone.classifier = nn.Identity()
 
-        self.logit = nn.Linear(in_features, 1)
+        self.avgpool = nn.AdaptiveMaxPool2d((1,1))
+
+        self.logit = nn.Linear(2208, 1)
         
     def forward(self, x):
         x = self.backbone.features(x)
+        x = self.avgpool(x)
         x = torch.flatten(x, 1)
 
-        x = self.logit(x)
+        x = self.logit(x)   
         return x
         
 
