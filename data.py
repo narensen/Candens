@@ -44,14 +44,13 @@ class BeautyDataset(Dataset):
         image = cv2.imread(image_scv, cv2.IMREAD_COLOR)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         labels = self.df.loc[idx, "rate"]
-        labels = torch.from_numpy(labels.astype(torch.float32))
         labels = labels.squeeze()
 
         if self.transforms:
             transformed = self.transforms(image=image)
             image = transformed['image']
 
-        label  = torch.tensor(label, dtype=torch.float32)
+        label  = torch.tensor(labels, dtype=torch.float32)
             
         return {'images':image,'labels':labels}
 
