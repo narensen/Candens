@@ -15,12 +15,15 @@ def fit(dataloader, test_dataloader, device="cpu", epochs=15):
     for epoch in range(epochs+1):
         train_loss = 0
         val_loss = 0
-        train_time = time.time
+        train_time = time.time()
         print(f"{epoch+1}/{epochs} Epochs")
 
         model.train()
-        with tqdm(dataloader, unit="batch") as tepoch:
-            for _, d in enumerate(dataloader):
+        progress_bar = tqdm(enumerate(dataloader), 
+                          total=len(dataloader),
+                          desc=f'Epoch {epoch+1}/{epochs}',
+                          unit='batch')
+        for _, d in progress_bar:
 
                 inputs = d["images"].to(device)
                 labels = d["labels"].to(device)
@@ -33,7 +36,7 @@ def fit(dataloader, test_dataloader, device="cpu", epochs=15):
                 optimizer.step()
 
                 train_loss += loss.item()
-                tepoch.set_postfix(loss=train_loss / (_ + 1))
+                progress_bar.set_postfix(loss=train_loss / (_ + 1))
 
         epoch_time = time.time() - train_time
 

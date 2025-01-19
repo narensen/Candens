@@ -25,7 +25,7 @@ transforms = A.Compose([
     A.Resize(height=SIZE, width=SIZE, p=1.0),
     A.Normalize(p=1.0),
     ToTensorV2(p=1.0)
-])
+])  
 
 train_df = BeautyDataset(train_df, transforms)
 test_df = BeautyDataset(test_df, transforms)
