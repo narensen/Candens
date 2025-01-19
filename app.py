@@ -21,7 +21,11 @@ SIZE = 224
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 train_df, test_df = dataset(device)
-transforms = A.Compose([A.Resize(height=SIZE, width=224, p=1.0)], A.Normalize(p=1.0), ToTensorV2(p=1.0))
+transforms = A.Compose([
+    A.Resize(height=SIZE, width=SIZE, p=1.0),
+    A.Normalize(p=1.0),
+    ToTensorV2(p=1.0)
+])
 
 train_df = BeautyDataset(train_df, transforms)
 test_df = BeautyDataset(test_df, transforms)
@@ -29,7 +33,7 @@ test_df = BeautyDataset(test_df, transforms)
 train_dataset = DataLoader(train_df)
 test_dataset = DataLoader(test_df)
 
-model = fit(train_dataset, test_dataset)
+model = fit(train_dataset, test_dataset, device)
 
 
 

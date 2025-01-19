@@ -5,7 +5,7 @@ import torch.nn as nn
 from sklearn.metrics import r2_score
 
 
-def fit(dataloader, test_dataloader, device, epochs=15):
+def fit(dataloader, test_dataloader, device="cpu", epochs=15):
 
     model = Candens().to(device)
     optimizer = torch.optim.Adam(model.parameters())
